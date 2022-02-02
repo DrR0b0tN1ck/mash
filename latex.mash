@@ -79,7 +79,7 @@
         last_log = log
 
       if latex_mode == 'latex':
-        shell('dvipdf %s.dvi' % name)
+        shell('dvipdf -dALLOWPSTRANSPARENCY %s.dvi' % name)
 
       # If we are doing strict checking, dig through the final log, looking
       # for problem.
