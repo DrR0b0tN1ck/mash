@@ -323,7 +323,7 @@ def imprt(*fnames, target=None, conditional=False):
 
         # Does this file exist already?  If not, copy it in.
         if not os.path.isfile(to) or not filecmp.cmp(fr, to, False):
-            print("@@-->", fr)
+            print("@" + "@-->", fr)
             shutil.copy2(fr, to)
 
     # Return the name of the (last) imported file.
