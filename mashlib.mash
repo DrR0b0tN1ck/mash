@@ -250,7 +250,7 @@ def keep(file_to_keep, target=None):
         target = file_to_keep
     target = os.path.join(keep_directory, target)
 
-    print('keep:', file_to_keep, '-->', target)
+    print('[', file_to_keep, '--keep-->', target, ']')
 
     # Make sure the destintation directory exists.  Note that we can't just
     # check for the keep directory itself, because the target might be in a
@@ -323,7 +323,7 @@ def imprt(*fnames, target=None, conditional=False):
 
         # Does this file exist already?  If not, copy it in.
         if not os.path.isfile(to) or not filecmp.cmp(fr, to, False):
-            print('imprt:', fr)
+            print("@" + "@-->", fr)
             shutil.copy2(fr, to)
 
     # Return the name of the (last) imported file.
@@ -394,8 +394,7 @@ def push(text = None):
     of the current frame, into the parent frame."""
     if text is None:
         text = self.content
-    self.parent.content += text
-    # self.result.append(TextLeaf(leaf.address, self.parent, text))
+    self.parent.content += str(text)
 
 
 def unindent():
