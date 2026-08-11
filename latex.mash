@@ -92,6 +92,19 @@ def latex(name, compiler=None, ignore_deps=None, keep_pdf=True, callback=None,
             with open(f'{name}.log', 'r', encoding='utf-8') as it:
                 log = it.read()
 
+            # minted 3.x invokes latexminted with a per-run UTC timestamp.
+            # TeX records that timestamp in the log, so the raw log changes
+            # on every compilation even when the document has converged.
+            convergence_log = re.sub(
+                r'(--timestamp\s+)\d{14}',
+                r'\1<TIMESTAMP>',
+                log
+            )
+            # Debugging to verify the above fix is what is needed
+            # with open(f'{name}.convergence-{compiles}.log', 'w', encoding='utf-8') as it:
+            #    it.write(convergence_log)
+
+
             if not callback_done and callable(callback):
                 callback()
                 callback_done = True
@@ -110,10 +123,10 @@ def latex(name, compiler=None, ignore_deps=None, keep_pdf=True, callback=None,
             if max_compiles and compiles >= max_compiles:
                 break
 
-            if log == last_log:
+            if convergence_log == last_log:
                 break
 
-            last_log = log
+            last_log = convergence_log
 
         if latex_mode == 'latex':
             # shell(f'dvipdf {name}.dvi')
