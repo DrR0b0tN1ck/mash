@@ -357,8 +357,7 @@ def before_code_hook():
         fr = match.group(1)
         to = imprt(fr)
         return to
-    # regex = r'@'+r'@([A-Za-z0-9_./+-]*)' # original
-    regex = r'@'+r'@([A-Za-z0-9_./+\-\[\]]*)' # Nick Hack
+    regex = r'@'+r'@([A-Za-z0-9_./+\-\[\]]*)'
     leaf.content = re.sub(regex, import_and_mangle, leaf.content)
     self.content = re.sub(regex, import_and_mangle, self.content)
 
